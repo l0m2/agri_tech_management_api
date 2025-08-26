@@ -45,13 +45,16 @@ export class ProdutoresCampanhaService{
                 return await this.produtoresCampanhaRepository.save(produtores_campanhas);
     }
 
-async atualizarProdutorCampanha(
+
+      async atualizarProdutorCampanha(
   produtor_campanha_id: number,
   produtor_id: number,
   tecnico_antigo_id: number,
   tecnico_novo_id: number,
   campanha_id: number
 ) {
+
+      console.log('ID pego' + produtor_campanha_id);
   const produtor_campanha = await this.findProdutoresCampanhasById(produtor_campanha_id);
 
   if (!produtor_campanha) {
@@ -93,4 +96,15 @@ async atualizarProdutorCampanha(
       }
       return produtores_campanhas; 
     }
+
+    async listarProdutoresPorTecnico(tecnico_id: number) {
+    const produtoresCampanhas = await this.produtoresCampanhaRepository.findProdutoresByTecnicoId(tecnico_id);
+    
+    return produtoresCampanhas.map(pc => ({
+        id: pc.produtor.id,
+        nome: pc.produtor.nome,
+        localizacao: pc.produtor.localizacao,
+    }));
+}
+
 }

@@ -27,6 +27,8 @@ export class ProdutoresCampanhaController{
       const {id} = request.params;
       const { produtor_id, tecnico_antigo_id, tecnico_novo_id, campanha_id } = request.body;
 
+    
+
       const produtor_campanha = await this.produtoresCampanhaService.atualizarProdutorCampanha(
         Number(id),
         produtor_id,
@@ -40,4 +42,15 @@ export class ProdutoresCampanhaController{
       response.status(400).json(new ErrorResponse(400, error.message));
     }
   }
+
+  async listarProdutoresPorTecnico(request: Request, response: Response): Promise<void> {
+    try {
+        const { id } = request.params;
+        const produtores = await this.produtoresCampanhaService.listarProdutoresPorTecnico(Number(id));
+        response.status(200).json(new SuccessResponse(produtores));
+    } catch (error: any) {
+        response.status(400).json(new ErrorResponse(400, error.message));
+    }
+}
+
 }

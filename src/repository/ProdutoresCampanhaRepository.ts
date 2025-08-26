@@ -16,4 +16,18 @@ export class produtoresCampanhaRepository{
     async findById(id: number): Promise<ProdutoresCampanhas | null> {
         return this.produtoresCampanhaRepository.findOne({ where: { id } });
     }
+
+    async findProdutoresByTecnicoId(tecnicoId: number) {
+        return this.produtoresCampanhaRepository.find({
+            where: { tecnico: { id: tecnicoId } },
+            relations: ["produtor"], 
+            select: {
+                produtor: {
+                    id: true,
+                    nome: true,
+                    localizacao: true,
+                },
+            },
+        });
+    }
 }
