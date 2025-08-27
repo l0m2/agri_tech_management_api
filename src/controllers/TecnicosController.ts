@@ -20,4 +20,14 @@ export class TecnicosController{
             response.status(400).json(new ErrorResponse(400, error.message));
         }
         }
+
+    async listarProdutoresPorTecnico(request: Request, response: Response): Promise<void> {
+    try {
+        const { id } = request.params;
+        const produtores = await this.tecnicoService.listarProdutoresPorTecnico(Number(id));
+        response.status(200).json(new SuccessResponse(produtores));
+    } catch (error: any) {
+        response.status(400).json(new ErrorResponse(400, error.message));
+    }
+    }
     }

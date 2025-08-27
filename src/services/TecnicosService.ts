@@ -2,14 +2,17 @@ import { TecnicosRepository } from "../repository/TecnicosRepository";
 import { TecnicosValidator } from "../utils/validators/TecnicosValidator";
 import { CampanhasService } from "./CampanhasService";
 import  Tecnicos  from "../models/Tecnicos";
+import { produtoresCampanhaRepository } from "../repository/ProdutoresCampanhaRepository";
 
 export class TecnicosService{
     private tecnicosRepository: TecnicosRepository;
     private campanhasService: CampanhasService;
+    private produtoresCampanhaRepository: produtoresCampanhaRepository;
 
     constructor(){
      this.tecnicosRepository = new TecnicosRepository;
      this.campanhasService = new CampanhasService;
+     this.produtoresCampanhaRepository = new produtoresCampanhaRepository;
     }
 
     async inserirTecnico(nome:string, campanha_id: number){
@@ -33,4 +36,14 @@ export class TecnicosService{
       }
       return tecnico; 
     }
+
+    async listarProdutoresPorTecnico(tecnico_id: number) {
+    const produtoresCampanhas = await this.produtoresCampanhaRepository.findProdutoresByTecnicoId(tecnico_id);
+    
+    return produtoresCampanhas.map(pc => ({
+        id: pc.produtor.id,
+        nome: pc.produtor.nome,
+        localizacao: pc.produtor.localizacao,
+    }));
+}
 }

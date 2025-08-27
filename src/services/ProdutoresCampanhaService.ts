@@ -97,14 +97,6 @@ export class ProdutoresCampanhaService{
       return produtores_campanhas; 
     }
 
-    async listarProdutoresPorTecnico(tecnico_id: number) {
-    const produtoresCampanhas = await this.produtoresCampanhaRepository.findProdutoresByTecnicoId(tecnico_id);
-    
-    return produtoresCampanhas.map(pc => ({
-        id: pc.produtor.id,
-        nome: pc.produtor.nome,
-        localizacao: pc.produtor.localizacao,
-    }));
-}
+
 
 }

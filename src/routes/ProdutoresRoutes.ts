@@ -87,13 +87,6 @@ const produtoresCampanhaController = new ProdutoresCampanhaController();
  *       400:
  *         description: Dados inválidos ou relação inexistente
  * 
- * /api/produtores:
- *   get:
- *     summary: Lista todos os produtores com campanhas
- *     tags: Produtores
- *     responses:
- *       200:
- *         description: Lista todos os produtores com campanhas
  */
  
 
@@ -101,6 +94,5 @@ const produtoresCampanhaController = new ProdutoresCampanhaController();
 router.post("/atribuir", (req, res) => produtoresCampanhaController.inserirProdutorCampanha(req, res));
 router.put("/transferir/:id", (req, res) => produtoresCampanhaController.atualizarProdutorCampanha(req, res));
 router.post("/", (req, res) => produtoresController.inserirProdutor(req, res));
-router.get("/tecnicos/:id/produtores", (req, res) => produtoresCampanhaController.listarProdutoresPorTecnico(req, res));
 
 export default router;
