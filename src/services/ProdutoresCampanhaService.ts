@@ -63,14 +63,6 @@ export class ProdutoresCampanhaService{
 
   ProdutoresCampanhaValidator.validateUpdate(produtor_id, tecnico_antigo_id, tecnico_novo_id, campanha_id);
 
-  if (!produtor_campanha.tecnico || produtor_campanha.tecnico.id !== tecnico_antigo_id) {
-    throw new Error("O tecnico antigo nao faz parte desta campanha de produtor");
-  }
-
-  if (!produtor_campanha.campanha || produtor_campanha.campanha.id !== campanha_id) {
-    throw new Error("Esta campanha nao faz parte desta campanha de produtor");
-  }
-
   const produtor = await this.produtoresService.findProdutorById(produtor_id);
   if (!produtor) throw new Error("Produtor nao existe");
 
@@ -82,6 +74,15 @@ export class ProdutoresCampanhaService{
 
   const campanha = await this.campanhasService.findCampanhaById(campanha_id);
   if (!campanha) throw new Error("Campanha nao existe");
+
+    if (tecnico_antigo_id !== tecnico_antigo.id) {
+    throw new Error("O tecnico antigo nao faz parte desta campanha de produtor");
+  }
+
+  if (campanha_id !== campanha.id) {
+    throw new Error("Esta campanha nao faz parte desta campanha de produtor");
+  }
+
 
   produtor_campanha.atualizarTecnico(tecnico_novo);
 

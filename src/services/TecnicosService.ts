@@ -37,13 +37,20 @@ export class TecnicosService{
       return tecnico; 
     }
 
-    async listarProdutoresPorTecnico(tecnico_id: number) {
-    const produtoresCampanhas = await this.produtoresCampanhaRepository.findProdutoresByTecnicoId(tecnico_id);
-    
-    return produtoresCampanhas.map(pc => ({
-        id: pc.produtor.id,
-        nome: pc.produtor.nome,
-        localizacao: pc.produtor.localizacao,
-    }));
+   async listarProdutoresPorTecnico(tecnico_id: number) {
+  const produtoresCampanhas = await this.produtoresCampanhaRepository.findProdutoresByTecnicoId(tecnico_id);
+
+  const produtores = produtoresCampanhas.map(pc => ({
+    id: pc.produtor.id,
+    nome: pc.produtor.nome,
+    localizacao: pc.produtor.localizacao,
+  }));
+
+  const produtoresList = Array.from(
+    new Map(produtores.map(p => [p.id, p])).values()
+  );
+
+  return produtoresList;
 }
+
 }
